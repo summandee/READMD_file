@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIPHY Style Navbar</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --giphy-bg: #121212;
+            --giphy-gradient-1: #00ff99;
+            --giphy-gradient-2: #8b5cf6;
+            --giphy-gradient-3: #ff006e;
+            --giphy-pink: #ff2f6e;
+            --giphy-pink-hover: #e6295f;
+            --giphy-text: #ffffff;
+            --giphy-muted: #b3b3b3;
+            --giphy-tag-bg: #1a1a1a;
+            --giphy-tag-border: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--giphy-bg);
+            min-height: 100vh;
+        }
+
+        /* ===== TOP NAVBAR ===== */
+        .giphy-top-nav {
+            background: transparent;
+            padding: 12px 24px;
+        }
+
+        /* GIPHY Logo - gradient text */
+        .giphy-logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(90deg, var(--giphy-gradient-1), var(--giphy-gradient-2), var(--giphy-gradient-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            transition: opacity 0.2s;
+            cursor: pointer;
+        }
+
+        .giphy-logo:hover {
+            opacity: 0.85;
+        }
+
+        /* Nav Links */
+        .giphy-nav-links .nav-link {
+            color: var(--giphy-text);
+            font-weight: 600;
+            font-size: 15px;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background 0.2s, color 0.2s;
+            position: relative;
+        }
+
+        .giphy-nav-links .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--giphy-text);
+        }
+
+        .giphy-nav-links .nav-link.active {
+            color: var(--giphy-text);
+        }
+
+        /* Upload/Avatar Section */
+        .giphy-nav-right .nav-link {
+            color: var(--giphy-muted);
+            font-weight: 600;
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .giphy-nav-right .nav-link:hover {
+            color: var(--giphy-text);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .giphy-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--giphy-gradient-2), var(--giphy-gradient-3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .giphy-avatar:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 12px rgba(255, 0, 110, 0.4);
+        }
+
+        /* ===== SEARCH SECTION ===== */
+        .giphy-search-section {
+            padding: 0 24px 16px;
+        }
+
+        .giphy-search-wrapper {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border-radius: 6px;
+            overflow: hidden;
+            height: 48px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.25s;
+        }
+
+        .giphy-search-wrapper:focus-within {
+            box-shadow: 0 2px 16px rgba(255, 47, 110, 0.25), 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .giphy-search-icon {
+            padding: 0 12px 0 16px;
+            color: #999;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        .giphy-search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            color: #333;
+            background: transparent;
+            height: 100%;
+        }
+
+        .giphy-search-input::placeholder {
+            color: #bbb;
+        }
+
+        .giphy-search-btn {
+            background: var(--giphy-pink);
+            border: none;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 0 28px;
+            height: 100%;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .giphy-search-btn:hover {
+            background: var(--giphy-pink-hover);
+        }
+
+        .giphy-search-btn:active {
+            background: #cc1f52;
+        }
+
+        /* ===== TAG PILLS ===== */
+        .giphy-tags {
+            padding: 0 24px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .giphy-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--giphy-tag-bg);
+            border: 1px solid var(--giphy-tag-border);
+            color: var(--giphy-text);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .giphy-tag:hover {
+            background: #2a2a2a;
+            border-color: #555;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .giphy-tag:active {
+            transform: translateY(0);
+        }
+
+        .giphy-tag .bi-x-lg {
+            font-size: 10px;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+
+        .giphy-tag:hover .bi-x-lg {
+            opacity: 1;
+        }
+
+        /* ===== DEMO CONTENT AREA ===== */
+        .demo-content {
+            padding: 40px 24px;
+            text-align: center;
+            color: var(--giphy-muted);
+        }
+
+        .demo-content p {
+            font-size: 14px;
+            opacity: 0.5;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .giphy-top-nav {
+                padding: 10px 16px;
+            }
+
+            .giphy-logo {
+                font-size: 22px;
+            }
+
+            .giphy-nav-links .nav-link {
+                font-size: 13px;
+                padding: 6px 10px;
+            }
+
+            .giphy-search-section {
+                padding: 0 16px 12px;
+            }
+
+            .giphy-search-btn span.btn-text {
+                display: none;
+            }
+
+            .giphy-search-btn {
+                padding: 0 16px;
+            }
+
+            .giphy-tags {
+                padding: 0 16px 16px;
+            }
+
+            .giphy-tag {
+                font-size: 12px;
+                padding: 5px 12px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .giphy-nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex !important;
+            }
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Toast notification */
+        .giphy-toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: #2a2a2a;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            border: 1px solid #444;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            pointer-events: none;
+        }
+
+        .giphy-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOP NAVBAR ===== -->
+    <nav class="giphy-top-nav">
+        <div class="d-flex align-items-center justify-content-between">
+            <!-- Left: Logo + Nav Links -->
+            <div class="d-flex align-items-center gap-2">
+                <a class="giphy-logo" href="#">GIPHY</a>
+
+                <ul class="giphy-nav-links nav ms-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Reactions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Create</a>
+                    </li>
+                                        <li class="nav-item">
+                        <a class="nav-link active" href="#">background</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">one piece</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">desktop</a>
+                    </li>
+                                        <li class="nav-item">
+                        <a class="nav-link active" href="#">computer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">download</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">free</a>
+                    </li>
+                                        <li class="nav-item">
+                        <a class="nav-link active" href="#">descargar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">typing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">american music awards 2016</a>
+                    </li>
+                </ul>
+
+                <!-- Mobile menu button -->
+                <button class="mobile-menu-btn" onclick="showToast('Menu opened')">
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
+
+            <!-- Right: Upload + Avatar -->
+            <div class="giphy-nav-right d-flex align-items-center gap-1">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-upload me-1"></i>Upload
+                </a>
+                <a class="nav-link" href="#">
+                    <i class="bi bi-plus-circle me-1"></i>Create
+                </a>
+                <div class="giphy-avatar ms-2" title="Profile">U</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== SEARCH BAR ===== -->
+    <div class="giphy-search-section">
+        <div class="giphy-search-wrapper">
+            <div class="giphy-search-icon">
+                <i class="bi bi-search"></i>
+            </div>
+            <input
+                type="text"
+                class="giphy-search-input"
+                id="searchInput"
+                placeholder="Search all the GIFs & Stickers"
+                value="devilman"
+                autocomplete="off"
+            >
+            <button class="giphy-search-btn" id="searchBtn">
+                <i class="bi bi-search"></i>
+                <span class="btn-text">Search</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== RELATED TAGS ===== -->
+    <div class="giphy-tags" id="tagsContainer">
+        <!-- Tags yahan dynamically inject honge -->
+    </div>
+
+    <!-- ===== DEMO CONTENT ===== -->
+    <div class="demo-content">
+        <p>GIF results yahan dikhenge</p>
+    </div>
+
+    <!-- Toast -->
+    <div class="giphy-toast" id="toast"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Related search tags data
+        const relatedTags = [
+            "evangelion 3.0",
+            "hellsing",
+            "rebuild of evangelion",
+            "yu yu hakusho",
+            "devilman crybaby",
+            "shiguri"
+        ];
+
+        // Tags render karo
+        const tagsContainer = document.getElementById('tagsContainer');
+
+        function renderTags(tags) {
+            tagsContainer.innerHTML = '';
+            tags.forEach((tag, index) => {
+                const el = document.createElement('a');
+                el.href = '#';
+                el.className = 'giphy-tag';
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(8px)';
+                el.innerHTML = `${tag} <i class="bi bi-x-lg"></i>`;
+
+                // Tag click pe search mein daalo
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.getElementById('searchInput').value = tag;
+                    showToast(`Searching: "${tag}"`);
+                });
+
+                tagsContainer.appendChild(el);
+
+                // Staggered animation
+                setTimeout(() => {
+                    el.style.transition = 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 60 * index);
+            });
+        }
+
+        // Initial render
+        renderTags(relatedTags);
+
+        // Search button click
+        document.getElementById('searchBtn').addEventListener('click', () => {
+            const query = document.getElementById('searchInput').value.trim();
+            if (query) {
+                showToast(`Searching: "${query}"`);
+            } else {
+                showToast('Please enter a search term');
+            }
+        });
+
+        // Enter key se search karo
+        document.getElementById('searchInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('searchBtn').click();
+            }
+        });
+
+        // Input clear karne par tags bhi refresh ho
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const val = e.target.value.trim();
+            if (val.length === 0) {
+                // Default tags wapas dikhao
+                renderTags(relatedTags);
+            }
+        });
+
+        // Toast notification function
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2200);
+        }
+
+        // Nav links pe active state toggle karo
+        document.querySelectorAll('.giphy-nav-links .nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.giphy-nav-links .nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                showToast(`Navigated to: ${this.textContent}`);
+            });
+        });
+    </script>
+</body>
+</html>
